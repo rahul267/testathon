@@ -7,16 +7,16 @@ import org.slf4j.LoggerFactory;
 
 public class BrowserFactory {
 
+    static WebDriver driver;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(BrowserFactory.class.getName());
 
     public static WebDriver getDriver(Browser browserType) {
 
-        WebDriver driver=null;
-
         switch (browserType) {
             case FIREFOX :
                 LOGGER.info("Creating FirefoxDriver");
-               driver = new FireFoxBrowserDriver().createDriver();
+                driver = new FireFoxBrowserDriver().createDriver();
                 break;
             case CHROME:
                 LOGGER.info("Creating ChromeDriver");
