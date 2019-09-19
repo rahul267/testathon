@@ -58,4 +58,10 @@ public class MobileSteps {
     public void relaunchApp(){
         mobileDriver.relaunchApp();
     }
+
+
+    @Given("I Open Browser $browser in Mobile")
+    public void  openBrowser(@Named("browser") String browser) throws MalformedURLException, InterruptedException {
+        mobileDriver.openBrowser(browser);
+    }
 }

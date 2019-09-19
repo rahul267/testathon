@@ -132,5 +132,22 @@ public class MobileDriverWrapper {
     private String BUTTON_XPATH = "//android.widget.Button[@text='%s']";
     private String TEXT_XPATH = "//android.widget.TextView[@text='%s']";
 
+    public void openBrowser(String browser) throws MalformedURLException, InterruptedException {
+        setDriverCapabilities(browser);
+        AndroidDriver driver = new AndroidDriver(new URL(appiumServer), desiredCapabilities);
+        driver.get("http://www.youtube.com");
+        Thread.sleep(10000);
+        driver.close();
+    }
+
+    private void setDriverCapabilities(String app) {
+        if (app.contains("Chrome")) {
+            desiredCapabilities.setCapability("deviceName", deviceName);
+            desiredCapabilities.setCapability("platformName", platformName);
+            desiredCapabilities.setCapability("browserName", "Chrome");
+            desiredCapabilities.setCapability("noReset", appReset);
+            return;
+        }
+    }
 }
 
