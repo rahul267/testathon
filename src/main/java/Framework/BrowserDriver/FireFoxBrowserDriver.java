@@ -1,11 +1,17 @@
 package Framework.BrowserDriver;
 
 
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class FireFoxBrowserDriver implements BrowserDriver {
     private static final Logger LOGGER = LoggerFactory.getLogger(FireFoxBrowserDriver.class.getName());
@@ -18,6 +24,17 @@ public class FireFoxBrowserDriver implements BrowserDriver {
         firefoxOptions.setAcceptInsecureCerts(true);
         WebDriver driver = new FirefoxDriver(firefoxOptions);
         return driver;
+    }
+
+    @Override
+    public WebDriver createRemoteDriver() throws MalformedURLException {
+
+        String nodeURL = "http://localhost:4444/wd/hub";
+        DesiredCapabilities capability = DesiredCapabilities.chrome();
+        capability.setBrowserName("chrome");
+        capability.setPlatform(Platform.WIN10);
+       WebDriver driver = new RemoteWebDriver(new URL(nodeURL), capability);
+       return driver ;
     }
 
 }

@@ -26,6 +26,7 @@
         <!--<metaFilter1>+smoke</metaFilter1>-->
         <metaFilter1></metaFilter1>
         <runner>RunWebStories.java</runner>
+        <jbehave.execution.threads>5</jbehave.execution.threads>
 
     </properties>
 
