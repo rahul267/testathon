@@ -22,6 +22,10 @@ public class BrowserFactory {
                 LOGGER.info("Creating ChromeDriver");
                 driver = new ChromeBrowserDriver().createDriver();
                 break;
+            case CHROMEGRID:
+                LOGGER.info("Creating ChromeDriver on Node");
+                driver = new ChromeBrowserDriver().createRemoteDriver();
+                break;
 
 
             default:
