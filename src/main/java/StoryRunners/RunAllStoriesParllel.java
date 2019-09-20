@@ -26,9 +26,9 @@ import org.jbehave.core.reporters.Format;
 
 //@RunWith(JUnitReportingRunner.class)
 
-@UsingEmbedder(metaFilters = "skip")
+@UsingEmbedder(metaFilters = "skip", threads = 3)
 
-public class RunAllStories extends JUnitStories {
+public class RunAllStoriesParllel extends JUnitStories {
 
 
     @Override
@@ -39,7 +39,7 @@ public class RunAllStories extends JUnitStories {
                 .useStoryReporterBuilder(new StoryReporterBuilder()
                         .withDefaultFormats()
                         .withFormats(Format.CONSOLE, Format.STATS, Format.HTML
-                               , ReportPortalFormat.INSTANCE
+                                , ReportPortalFormat.INSTANCE
                         )
                         .withCrossReference(new CrossReference()))
                 .useStepPatternParser(new RegexPrefixCapturingPatternParser(
