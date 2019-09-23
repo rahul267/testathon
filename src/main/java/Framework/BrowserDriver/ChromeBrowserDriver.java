@@ -17,15 +17,38 @@ import java.net.URL;
 public class ChromeBrowserDriver implements BrowserDriver {
     private static final Logger log = LoggerFactory.getLogger(ChromeBrowserDriver.class.getName());
     public static final String CHROME_DRIVER_FILEPATH = System.getProperty("user.dir") + "/src/main/resources/driver-executables/chromedriver.exe";
+    String placeOfExecution = System.getProperty("placeOfExecution");
+    String node = System.getProperty("node");
 
     @Override
-    public WebDriver createDriver() {
-        System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_FILEPATH);
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setAcceptInsecureCerts(true);
-        WebDriver driver = new ChromeDriver(chromeOptions);
-        return driver;
+    public WebDriver createDriver(String os ) {
+        WebDriver driver = null ;
+
+        if(placeOfExecution == "GRID")
+        {
+            Platform platform = Platform.fromString(os.toUpperCase());
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.setCapability("platform", platform);
+
+            try{
+                driver = new RemoteWebDriver(new URL(node + "/wd/hub"), chromeOptions);
+                //more code goes here
+            }catch(MalformedURLException ex){
+//do exception handling here
+            }
+
+            return driver ;
+        }
+
+        else {
+            System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_FILEPATH);
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.setAcceptInsecureCerts(true);
+             driver = new ChromeDriver(chromeOptions);
+            return driver;
+        }
     }
+
 
     @Override
     public WebDriver createRemoteDriver()  {
