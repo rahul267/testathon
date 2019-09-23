@@ -7,10 +7,7 @@ import Pages.EventGeneralPage;
 import Pages.EventTemplateChooser;
 import Pages.EventsPage;
 import Utilities.ContextVariable;
-import org.jbehave.core.annotations.AfterStories;
-import org.jbehave.core.annotations.Given;
-import org.jbehave.core.annotations.Named;
-import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.*;
 import org.openqa.selenium.WebDriver;
 
 public class UIAdminSteps {
@@ -29,6 +26,9 @@ public class UIAdminSteps {
         if (driver != null)
             driver.close();
     }
+
+
+
 
     @Given("i login to Login to events platform as Event Owner Internal")
     public void givenILoginToLoginToEventsPlatformAsEventOwnerInternal() {

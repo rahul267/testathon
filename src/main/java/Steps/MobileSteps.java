@@ -3,21 +3,23 @@ package Steps;
 import mobileUtlity.MobileDriverWrapper;
 import org.jbehave.core.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.net.MalformedURLException;
 
 @Component
+@Lazy
 public class MobileSteps {
 
     @Autowired
     private MobileDriverWrapper mobileDriver;
 
-    @BeforeStories
+   // @BeforeStories
     public void beforeStory() {
     }
 
-    @AfterStories
+    //@AfterStories
     public void afterStory() {
             mobileDriver.close();
     }
@@ -62,6 +64,8 @@ public class MobileSteps {
 
     @Given("I Open Browser $browser in Mobile")
     public void  openBrowser(@Named("browser") String browser) throws MalformedURLException, InterruptedException {
-        mobileDriver.openBrowser(browser);
+       // mobileDriver.openBrowser(browser);
     }
+
+
 }

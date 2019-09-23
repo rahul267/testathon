@@ -3,6 +3,7 @@ package mobileUtlity;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.touch.TouchActions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -136,6 +137,14 @@ public class MobileDriverWrapper {
         setDriverCapabilities(browser);
         AndroidDriver driver = new AndroidDriver(new URL(appiumServer), desiredCapabilities);
         driver.get("http://www.youtube.com");
+        Thread.sleep(10000);
+        System.out.println(
+                driver.findElementByXPath("(//*[@id=\"app\"]//ytm-large-media-item//h3)[1]").getText());
+
+        TouchActions action = new TouchActions(driver);
+        action.scroll(10, 100);
+        action.perform();
+
         Thread.sleep(10000);
         driver.close();
     }
