@@ -18,7 +18,7 @@ public class FireFoxBrowserDriver implements BrowserDriver {
     public static final String FIREFOX_DRIVER_FILEPATH = System.getProperty("user.dir") + "/src/main/resources/driver-executables/geckodriver.exe";
 
     @Override
-    public WebDriver createDriver() {
+    public WebDriver createDriver(String os) {
         System.setProperty("webdriver.gecko.driver", FIREFOX_DRIVER_FILEPATH);
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setAcceptInsecureCerts(true);
