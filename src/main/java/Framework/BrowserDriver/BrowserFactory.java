@@ -16,11 +16,21 @@ public class BrowserFactory {
         switch (browserType) {
             case FIREFOX :
                 LOGGER.info("Creating FirefoxDriver");
-                driver = new FireFoxBrowserDriver().createDriver();
+
+               driver = new FireFoxBrowserDriver().createDriver("WINDOWS");
                 break;
             case CHROME:
                 LOGGER.info("Creating ChromeDriver");
-                driver = new ChromeBrowserDriver().createDriver();
+                driver = new ChromeBrowserDriver().createDriver("WINDOWS");
+                break;
+            case CHROMEGRID:
+                LOGGER.info("Creating ChromeDriver on Node");
+                driver = new ChromeBrowserDriver().createRemoteDriver();
+                break;
+
+            case MOBILECHROME:
+                LOGGER.info("Creating ChromeDriver on Node");
+                driver = new ChromeMobileBrowser().createDriver("test");
                 break;
 
 
