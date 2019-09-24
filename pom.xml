@@ -25,7 +25,7 @@
         <!--If yo want to run the test cases  tagged as @smoke by default uncomment the below -->
         <!--<metaFilter1>+smoke</metaFilter1>-->
         <metaFilter1></metaFilter1>
-        <runner>RunAllStoriesParllel.java</runner>
+        <runner>RunAllStories.java</runner>
         <jbehave.execution.threads>5</jbehave.execution.threads>
 
         <!--This property is for grid or local execution for grid execution replace the place of execution as grid-->
