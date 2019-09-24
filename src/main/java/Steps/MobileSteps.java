@@ -15,20 +15,6 @@ public class MobileSteps {
     @Autowired
     private MobileDriverWrapper mobileDriver;
 
-   // @BeforeStories
-    public void beforeStory() {
-    }
-
-    //@AfterStories
-    public void afterStory() {
-            mobileDriver.close();
-    }
-
-    @Given("I Launch Application")
-    public void launchApp() throws MalformedURLException {
-        mobileDriver.launchApplication();
-    }
-
     @Then("I click on Text button $text")
     public void clickOnButtonWithText(@Named("text") String text) {
         mobileDriver.clickOnButtonByText(text);
@@ -47,25 +33,22 @@ public class MobileSteps {
 
     @Given("I click if TextView $text available wait for $time sec")
     public void clickOnTextViewWithTextIfAvailable(@Named("text") String text,
-                                                 @Named("time") long time) {
+                                                   @Named("time") long time) {
         mobileDriver.clickOnTextViewByTextIfAvailable(text, time);
     }
 
     @Given("I close app")
-    public void closeApp(){
+    public void closeApp() {
         mobileDriver.closeApp();
     }
 
     @Given("I relaunch app")
-    public void relaunchApp(){
+    public void relaunchApp() {
         mobileDriver.relaunchApp();
     }
 
-
-    @Given("I Open Browser $browser in Mobile")
-    public void  openBrowser(@Named("browser") String browser) throws MalformedURLException, InterruptedException {
-       // mobileDriver.openBrowser(browser);
+    @Given("I Open Web $webUrl in Mobile Browser")
+    public void openBrowser(@Named("webUrl") String webUrl) {
+        mobileDriver.openWebPage(webUrl);
     }
-
-
 }

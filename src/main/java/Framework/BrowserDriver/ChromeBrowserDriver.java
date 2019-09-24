@@ -29,14 +29,10 @@ public class ChromeBrowserDriver implements BrowserDriver {
             Platform platform = Platform.fromString(os.toUpperCase());
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.setCapability("platform", platform);
-
             try{
                 driver = new RemoteWebDriver(new URL(node + "/wd/hub"), chromeOptions);
-                //more code goes here
             }catch(MalformedURLException ex){
-//do exception handling here
             }
-
             return driver ;
         }
 

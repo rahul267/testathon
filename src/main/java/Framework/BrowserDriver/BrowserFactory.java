@@ -11,12 +11,12 @@ public class BrowserFactory {
 
     public static WebDriver getDriver(Browser browserType) {
 
-        WebDriver driver=null;
+        WebDriver driver = null;
 
         switch (browserType) {
-            case FIREFOX :
+            case FIREFOX:
                 LOGGER.info("Creating FirefoxDriver");
-               driver = new FireFoxBrowserDriver().createDriver("WINDOWS");
+                driver = new FireFoxBrowserDriver().createDriver("WINDOWS");
                 break;
             case CHROME:
                 LOGGER.info("Creating ChromeDriver");

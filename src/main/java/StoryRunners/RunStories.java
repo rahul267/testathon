@@ -1,9 +1,7 @@
 package StoryRunners;
 
-import static mobileUtlity.MobileContext.*;
-
-import com.epam.reportportal.jbehave.ReportPortalFormat;
 import Config.MyConfig;
+import com.epam.reportportal.jbehave.ReportPortalFormat;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.io.LoadFromClasspath;
@@ -23,6 +21,7 @@ import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 
 public class RunStories extends JUnitStories {
 
+    private final AnnotationConfigApplicationContext annotationConfigApplicationContext;
 
     public RunStories() {
         annotationConfigApplicationContext = new AnnotationConfigApplicationContext(MyConfig.class);
@@ -36,7 +35,7 @@ public class RunStories extends JUnitStories {
                 .useStoryLoader(resourceLoader)
                 .useStoryReporterBuilder(new StoryReporterBuilder()
                         .withDefaultFormats()
-                        .withFormats(Format.CONSOLE, Format.STATS, Format.HTML,Format.XML,ReportPortalFormat.INSTANCE)
+                        .withFormats(Format.CONSOLE, Format.STATS, Format.HTML, Format.XML, ReportPortalFormat.INSTANCE)
                         .withFailureTrace(true)
                         .withFailureTraceCompression(true)
                         .withCrossReference(new CrossReference()))
