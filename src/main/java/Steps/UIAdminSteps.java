@@ -33,10 +33,12 @@ public class UIAdminSteps {
     @Given("i login to Login to events platform as Event Owner Internal")
     public void givenILoginToLoginToEventsPlatformAsEventOwnerInternal() {
         //driver = BrowserFactory.getDriver(Browser.CHROMEGRID); // if you need to run it on grid .
-        //driver = BrowserFactory.getDriver(Browser.FIREFOX);
-        driver = BrowserFactory.getDriver(Browser.CHROME);
-        adminPage = new AdminPage(driver);
-        adminPage.goToApp();
+        driver = BrowserFactory.getDriver(Browser.MOBILECHROME);
+        driver.get("www.youtube.com");
+        System.out.println("Ok");
+       // driver = BrowserFactory.getDriver(Browser.CHROME);
+        //adminPage = new AdminPage(driver);
+       // adminPage.goToApp();
     }
 
     @Given("Click on Profile photo at the top right corner with Admin")
