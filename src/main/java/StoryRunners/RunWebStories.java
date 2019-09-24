@@ -4,13 +4,12 @@ package StoryRunners;
 import Steps.ApiTestSteps.GetAllEventsSteps;
 import Steps.ApiTestSteps.GetEventPageDetailsSteps;
 import Steps.UIAdminSteps;
-import com.epam.reportportal.jbehave.ReportPortalFormat;
+import Steps.UiSteps.LogInSteps;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
-import org.jbehave.core.parsers.RegexPrefixCapturingPatternParser;
 import org.jbehave.core.reporters.CrossReference;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
@@ -33,7 +32,7 @@ public class RunWebStories extends JUnitStories {
                 .useStoryReporterBuilder(new StoryReporterBuilder()
                         .withDefaultFormats()
                         .withFormats(Format.CONSOLE, Format.STATS, Format.HTML
-                                , ReportPortalFormat.INSTANCE
+                                //, ReportPortalFormat.INSTANCE
                         )
                         .withCrossReference(new CrossReference()))
                 .useStepMonitor(new SilentStepMonitor());
@@ -41,13 +40,13 @@ public class RunWebStories extends JUnitStories {
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-        return new InstanceStepsFactory(configuration(), new UIAdminSteps() ,   new GetAllEventsSteps(),new GetEventPageDetailsSteps());
+        return new InstanceStepsFactory(configuration(), new UIAdminSteps() ,   new GetAllEventsSteps(),new GetEventPageDetailsSteps(),new LogInSteps());
     }
 
 
     @Override
     protected List<String> storyPaths() {
-        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/UIStories/*.story", "");
+        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/UIStories/InstagramSearching.story", "");
 
     }
 }
