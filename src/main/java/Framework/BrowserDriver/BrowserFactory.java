@@ -27,6 +27,11 @@ public class BrowserFactory {
                 driver = new ChromeBrowserDriver().createRemoteDriver();
                 break;
 
+            case MOBILECHROME:
+                LOGGER.info("Creating ChromeDriver on Node");
+                driver = new ChromeMobileBrowser().createDriver("test");
+                break;
+
 
             default:
                 throw new IllegalArgumentException("Cannot create driver for browser" + browserType);

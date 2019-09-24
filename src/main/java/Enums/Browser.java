@@ -9,7 +9,8 @@ public enum Browser {
     EDGE("edge"),
     SAFARI("safari"),
     HTMLUNIT("htmlunit"),
-    PHANTOMJS("phantomjs");
+    PHANTOMJS("phantomjs"),
+    MOBILECHROME("mobileChrome");
 
     String type;
 

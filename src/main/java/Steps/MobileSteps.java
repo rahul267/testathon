@@ -1,7 +1,10 @@
 package Steps;
 
+import Enums.Browser;
+import Framework.BrowserDriver.BrowserFactory;
 import mobileUtlity.MobileDriverWrapper;
 import org.jbehave.core.annotations.*;
+import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -62,6 +65,8 @@ public class MobileSteps {
 
     @Given("I Open Browser $browser in Mobile")
     public void  openBrowser(@Named("browser") String browser) throws MalformedURLException, InterruptedException {
-        mobileDriver.openBrowser(browser);
+       WebDriver driver = BrowserFactory.getDriver(Browser.MOBILECHROME);
+       driver.get("www.google.com");
+       //mobileDriver.openBrowser(browser);
     }
 }
