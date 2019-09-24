@@ -3,6 +3,7 @@ package StoryRunners;
 import Steps.ApiTestSteps.GetAllEventsSteps;
 import Steps.ApiTestSteps.GetEventPageDetailsSteps;
 import Steps.UIAdminSteps;
+import Steps.UiSteps.LogInSteps;
 import com.epam.reportportal.jbehave.ReportPortalFormat;
 import org.jbehave.core.annotations.UsingEmbedder;
 import org.jbehave.core.configuration.Configuration;
@@ -49,7 +50,7 @@ public class RunAllStories extends JUnitStories {
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-        return new InstanceStepsFactory(configuration(), new UIAdminSteps() ,   new GetAllEventsSteps(),new GetEventPageDetailsSteps());
+        return new InstanceStepsFactory(configuration(), new UIAdminSteps() ,   new GetAllEventsSteps(),new GetEventPageDetailsSteps(),new LogInSteps());
     }
 
 

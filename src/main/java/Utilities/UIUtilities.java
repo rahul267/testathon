@@ -115,4 +115,12 @@ public void takeScreenShot(WebDriver driver){
         }
 
     }
+
+   /* public void jsonConvert(){
+        JSONObject detials = new JSONObject();
+        detials.put("src", "Lokesh");
+        detials.put("likes", "Gupta");
+        detials.put("comments", "howtodoinjava.com");
+
+    }*/
 }
