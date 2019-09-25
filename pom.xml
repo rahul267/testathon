@@ -11,27 +11,16 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jbehave.core.version>4.5.1</jbehave.core.version>
-        <jbehave.execution.threads>1</jbehave.execution.threads>
-        <lombok.version>1.16.6</lombok.version>
-        <aspectj.version>1.8.9</aspectj.version>
-        <axon-sdk.version>1.4.1</axon-sdk.version>
         <envType>dev</envType>
         <!-- Default Report portal properties  -->
         <rp.enable>true</rp.enable>
-        <rp.tags>DEV;FCRM</rp.tags>
+        <rp.tags>DEV;TestAuthon</rp.tags>
         <rp.description>API Tests which is Quality Gate for pushing code into Stage</rp.description>
         <rp.mode>DEBUG</rp.mode>
-        <rp.project>assetapi</rp.project>
-        <!--If yo want to run the test cases  tagged as @smoke by default uncomment the below -->
-        <!--<metaFilter1>+smoke</metaFilter1>-->
+        <rp.project>TestAuthon</rp.project>
         <metaFilter1></metaFilter1>
         <runner>RunStories.java</runner>
         <jbehave.execution.threads>5</jbehave.execution.threads>
-
-        <!--This property is for grid or local execution for grid execution replace the place of execution as grid-->
-        <placeOfExecution>GRID</placeOfExecution>
-        <node>localhost:4444</node>
-
     </properties>
 
     <repositories>
@@ -75,43 +64,45 @@
             <version>4.0.0</version>
         </dependency>
 
-
+        <!--Assertion Dependency-->
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>3.5.2</version>
         </dependency>
+
         <!--Report Portal jars-->
         <dependency>
             <groupId>com.epam.reportportal</groupId>
             <artifactId>agent-java-jbehave</artifactId>
             <version>4.2.0</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.12.1</version>
-        </dependency>
-
 
         <dependency>
-            <groupId>io.appium</groupId>
-            <artifactId>java-client</artifactId>
-            <version>7.1.0</version>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>logger-java-log4j</artifactId>
+            <version>4.0.1</version>
         </dependency>
+
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-remote-driver</artifactId>
-            <version>3.141.59</version>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>logger-java-logback</artifactId>
+            <version>4.0.0</version>
         </dependency>
-        <!--selenium dependency-->
+        <!--selenium Appium dependency-->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>3.141.59</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>7.2.0</version>
+        </dependency>
+
+        <!--Spring Dependency-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -123,6 +114,7 @@
             <version>5.1.4.RELEASE</version>
         </dependency>
 
+        <!--Jbehave Dependency-->
         <dependency>
             <groupId>org.jbehave</groupId>
             <artifactId>jbehave-spring</artifactId>

@@ -1,21 +1,28 @@
 package Config;
 
-import org.jbehave.core.annotations.AfterScenario;
+import mobileUtlity.WebDriverWrapper;
+import org.jbehave.core.annotations.AfterStory;
+import org.jbehave.core.model.*;
+import org.jbehave.core.reporters.ConsoleOutput;
+import org.jbehave.core.reporters.StoryReporter;
+import org.openqa.selenium.WebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
+
+@Component
 public class LifeCircle {
 
-    @AfterScenario(uponOutcome=AfterScenario.Outcome.FAILURE)
-    public void afterFailedScenario() {
-        System.out.println("Failed This is to capture Failed Scenario");
+    @Autowired
+    WebDriverWrapper webDriverWrapper;
+
+    @AfterStory
+    public void afterStory(boolean b) {
+        WebDriver driver = webDriverWrapper.driverDeleget.get();
+        if(driver!=null)
+            driver.close();
     }
 
-    @AfterScenario(uponOutcome=AfterScenario.Outcome.SUCCESS)
-    public void afterPaasedScenario() {
-        System.out.println("Passed This is to capture Passed Scenario");
-    }
-
-    @AfterScenario(uponOutcome=AfterScenario.Outcome.ANY)
-    public void afterAnyScenario() {
-        System.out.println("Any This is to capture Any Scenario");
-    }
 }

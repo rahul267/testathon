@@ -5,6 +5,8 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 
@@ -12,11 +14,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @Configuration
-@ComponentScan({"Steps", "mobileUtlity"})
+@ComponentScan({"Steps", "mobileUtlity", "Config"})
 @PropertySource({"Config/${env:dev}/env.properties"})
 public class MyConfig {
-
-    @Value("${base.url:www.google.com}")
+    private static final Logger log = LoggerFactory.getLogger(MyConfig.class);
+    @Value("${base.url}")
     private String baseUrl;
 
     @Value("${env:dev}")
@@ -26,11 +28,13 @@ public class MyConfig {
     String deviceName;
 
     @Value("${device.platformName}")
-    String platformName;
+    private String platformName;
 
     @Value("${appium.server}")
-    String appiumServer;
+    private String appiumServer;
 
+    @Value("$web.Browser:Chrome")
+    private String browserType;
 
     @Bean(name = "getRequestSpecification")
     @Lazy
@@ -51,6 +55,7 @@ public class MyConfig {
     @Bean(name = "MobileDriver")
     public AndroidDriver getAndroidDriver() {
         try {
+            log.info("Android Driver Instantiating...");
             return new AndroidDriver(new URL(appiumServer), getDriverCapabilities());
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -59,7 +64,7 @@ public class MyConfig {
     }
 
     private DesiredCapabilities getDriverCapabilities() {
-        DesiredCapabilities desiredCapabilities = DesiredCapabilities.android();
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability("deviceName", deviceName);
         desiredCapabilities.setCapability("platformName", platformName);
         desiredCapabilities.setCapability("browserName", "Chrome");

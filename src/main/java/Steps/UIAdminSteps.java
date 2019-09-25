@@ -1,17 +1,23 @@
 package Steps;
 
-import Enums.Browser;
-import Framework.BrowserDriver.BrowserFactory;
 import Pages.AdminPage;
 import Pages.EventGeneralPage;
 import Pages.EventTemplateChooser;
 import Pages.EventsPage;
 import Utilities.ContextVariable;
-import org.jbehave.core.annotations.*;
+import mobileUtlity.WebDriverWrapper;
+import org.jbehave.core.annotations.AfterStories;
+import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Named;
+import org.jbehave.core.annotations.Then;
 import org.openqa.selenium.WebDriver;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+@Component
 public class UIAdminSteps {
-    WebDriver driver;
+
+    @Autowired
+    WebDriverWrapper driver;
     AdminPage adminPage;
     EventsPage eventsPage;
     EventTemplateChooser eventsPageSecond;
@@ -21,21 +27,11 @@ public class UIAdminSteps {
     public UIAdminSteps() {
     }
 
-    @AfterStories
-    public void afterStory() {
-        if (driver != null)
-            driver.close();
-    }
-
-
 
 
     @Given("i login to Login to events platform as Event Owner Internal")
     public void givenILoginToLoginToEventsPlatformAsEventOwnerInternal() {
-        //driver = BrowserFactory.getDriver(Browser.CHROMEGRID); // if you need to run it on grid .
-        //driver = BrowserFactory.getDriver(Browser.FIREFOX);
-        driver = BrowserFactory.getDriver(Browser.CHROME);
-        adminPage = new AdminPage(driver);
+        adminPage = new AdminPage(driver.getWebDriver());
         adminPage.goToApp();
     }
 
@@ -50,7 +46,7 @@ public class UIAdminSteps {
 
     @Given("i  Click 'New Event' button")
     public void givenIClickNewEventButton() {
-        eventsPage = new EventsPage(driver);
+        eventsPage = new EventsPage(driver.getWebDriver());
         eventsPage.clickEventButton();
     }
 
@@ -64,7 +60,7 @@ public class UIAdminSteps {
     @Then("Set Empty Template and create event")
     public void thenSetEmptyTemplate() {
 
-        eventsPageSecond = new EventTemplateChooser(driver);
+        eventsPageSecond = new EventTemplateChooser(driver.getWebDriver());
         eventsPageSecond.CompleteCreateEvent();
     }
 
@@ -95,7 +91,7 @@ public class UIAdminSteps {
     @Then("verify that title  <title> , SuggestedURL <suggestedURL> , StartEndDate <StartEndDate> and PrivacySettings<PrivacySettings> are found")
     public void verifySteps(@Named("title") String title, @Named("suggestedURL") String suggestedURL,
                             @Named("StartEndDate") String StartEndDate, @Named("PrivacySettings") String PrivacySettings) {
-        eventGeneralPage = new EventGeneralPage(driver);
+        eventGeneralPage = new EventGeneralPage(driver.getWebDriver());
         eventGeneralPage.checkFormFields(title, suggestedURL, StartEndDate, StartEndDate, PrivacySettings);
 
     }

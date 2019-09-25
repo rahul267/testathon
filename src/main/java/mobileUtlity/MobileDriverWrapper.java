@@ -2,10 +2,12 @@ package mobileUtlity;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -17,17 +19,14 @@ public class MobileDriverWrapper {
     private String BUTTON_XPATH = "//android.widget.Button[@text='%s']";
     private String TEXT_XPATH = "//android.widget.TextView[@text='%s']";
 
-    @Value("${waitTime}")
+    @Value("${waitTime:1000}")
     long Wait_Time;
-
-    @Value("${app.activityName}")
-    String appActivity;
-
 
     @Value(("${app.noReset:true}"))
     boolean appReset;
 
     @Autowired
+    @Qualifier("MobileDriver")
     private AndroidDriver androidDriver;
 
     public void closeApp() {
@@ -64,7 +63,7 @@ public class MobileDriverWrapper {
 
     public void close() {
         if (androidDriver != null)
-            androidDriver.quit();
+            androidDriver.close();
     }
 
     public void clickOnButtonByTextIfAvailable(String text, long waitTime) {
@@ -86,6 +85,17 @@ public class MobileDriverWrapper {
     }
     public void openWebPage(String url) {
         androidDriver.get(url);
+    }
+
+    public void scrollUp() {
+        JavascriptExecutor jse = (JavascriptExecutor) androidDriver;
+        jse.executeScript("scroll(0, +250);");
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        androidDriver.close();
     }
 
 }
