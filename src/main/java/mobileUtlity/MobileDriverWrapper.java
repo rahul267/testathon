@@ -44,6 +44,11 @@ public class MobileDriverWrapper {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    public WebElement waitForVisibilityOf(By locator , long waitTime) {
+        WebDriverWait wait = new WebDriverWait(androidDriver, waitTime);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
     private WebElement waitForClickabilityOf(By locator) {
         return waitForClickabilityOf(locator, Wait_Time);
     }
@@ -87,15 +92,14 @@ public class MobileDriverWrapper {
         androidDriver.get(url);
     }
 
+    public void scrollDown() {
+        JavascriptExecutor jse = (JavascriptExecutor) androidDriver;
+        jse.executeScript("scroll(0, 250);");
+    }
+
     public void scrollUp() {
         JavascriptExecutor jse = (JavascriptExecutor) androidDriver;
-        jse.executeScript("scroll(0, +250);");
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        androidDriver.close();
+        jse.executeScript("scroll(0, -250);");
     }
 
 }

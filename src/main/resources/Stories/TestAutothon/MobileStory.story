@@ -1,8 +1,12 @@
 Meta:
 
 Narrative:
-As a user When I invoke GetAll Events API then status code should be 200 and validate the response
+Open Google Search Step-ni
 
 Scenario: To validate the response of GET API Request
-Given I Open Web http://www.youtube.com in Mobile Browser
-And I Scroll
+Given I Open Web http://www.google.com in Mobile Browser
+Then Google Page is Loaded
+When I Search for keyword step-in forum facebook
+Then I expect search results has result which contains text 25000 test professionals
+Given I click on Result which contains text 25000 test professionals
+
