@@ -56,7 +56,6 @@ public class MobileSteps {
     @Given("I Open Web $webUrl in Mobile Browser")
     public void openBrowser(@Named("webUrl") String webUrl) throws InterruptedException {
         mobileDriver.openWebPage(webUrl);
-        Thread.sleep(10000);
     }
 
     @Given("I Scroll")
