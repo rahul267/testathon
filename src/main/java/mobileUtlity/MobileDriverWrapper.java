@@ -2,89 +2,50 @@ package mobileUtlity;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 @Component
 @Lazy
 public class MobileDriverWrapper {
 
-    @Value("${app.packageName}")
-    String appPackage;
+    private String BUTTON_XPATH = "//android.widget.Button[@text='%s']";
+    private String TEXT_XPATH = "//android.widget.TextView[@text='%s']";
 
-    @Value("${waitTime}")
+    @Value("${waitTime:1000}")
     long Wait_Time;
-
-    @Value("${app.activityName}")
-    String appActivity;
-
-    @Value("${device.Name}")
-    String deviceName;
-
-    @Value("${device.platformName}")
-    String platformName;
-
-    @Value("${appium.server}")
-    String appiumServer;
-
-    @Value("${appium.automationName}")
-    String automationName;
-
-    @Value("${app.apkPath:AlreadyInstalled}")
-    String appApkPath;
 
     @Value(("${app.noReset:true}"))
     boolean appReset;
 
+    @Autowired
+    @Qualifier("MobileDriver")
     private AndroidDriver androidDriver;
-    private DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-
-    private void setDriverCapabilities() {
-        if (!appApkPath.equals("AlreadyInstalled")) {
-            if (!(new File(appApkPath).isFile())) {
-                throw new RuntimeException("No Such File");
-            } else {
-                desiredCapabilities.setCapability("app", appApkPath);
-            }
-        }
-        desiredCapabilities.setCapability("deviceName", deviceName);
-        desiredCapabilities.setCapability("platformName", platformName);
-        desiredCapabilities.setCapability("appPackage", appPackage);
-        desiredCapabilities.setCapability("appActivity", appActivity);
-        desiredCapabilities.setCapability("automationName", automationName);
-        desiredCapabilities.setCapability("noReset", appReset);
-    }
-
-
-    public void launchApplication() throws MalformedURLException {
-        setDriverCapabilities();
-        androidDriver = new AndroidDriver(new URL(appiumServer), desiredCapabilities);
-    }
-
 
     public void closeApp() {
-        androidDriver.closeApp();
-
+        if (androidDriver != null)
+            androidDriver.closeApp();
     }
 
     public void relaunchApp() {
-        try {
+        if (androidDriver != null)
             androidDriver.launchApp();
-        } catch (Exception e) {
-        }
     }
 
     public WebElement waitForVisibilityOf(By locator) {
         WebDriverWait wait = new WebDriverWait(androidDriver, Wait_Time);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public WebElement waitForVisibilityOf(By locator , long waitTime) {
+        WebDriverWait wait = new WebDriverWait(androidDriver, waitTime);
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
@@ -107,7 +68,7 @@ public class MobileDriverWrapper {
 
     public void close() {
         if (androidDriver != null)
-            androidDriver.quit();
+            androidDriver.close();
     }
 
     public void clickOnButtonByTextIfAvailable(String text, long waitTime) {
@@ -127,10 +88,19 @@ public class MobileDriverWrapper {
         } catch (Exception e) {
         }
     }
+    public void openWebPage(String url) {
+        androidDriver.get(url);
+    }
 
+    public void scrollDown() {
+        JavascriptExecutor jse = (JavascriptExecutor) androidDriver;
+        jse.executeScript("scroll(0, 250);");
+    }
 
-    private String BUTTON_XPATH = "//android.widget.Button[@text='%s']";
-    private String TEXT_XPATH = "//android.widget.TextView[@text='%s']";
+    public void scrollUp() {
+        JavascriptExecutor jse = (JavascriptExecutor) androidDriver;
+        jse.executeScript("scroll(0, -250);");
+    }
 
 }
 

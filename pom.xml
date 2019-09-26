@@ -10,23 +10,17 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jbehave.core.version>3.9.5</jbehave.core.version>
-        <jbehave.execution.threads>1</jbehave.execution.threads>
-        <lombok.version>1.16.6</lombok.version>
-        <aspectj.version>1.8.9</aspectj.version>
-        <axon-sdk.version>1.4.1</axon-sdk.version>
-        <envType>DEV</envType>
+        <jbehave.core.version>4.5.1</jbehave.core.version>
+        <envType>dev</envType>
         <!-- Default Report portal properties  -->
         <rp.enable>true</rp.enable>
-        <rp.tags>DEV;FCRM</rp.tags>
+        <rp.tags>DEV;TestAuthon</rp.tags>
         <rp.description>API Tests which is Quality Gate for pushing code into Stage</rp.description>
         <rp.mode>DEBUG</rp.mode>
-        <rp.project>assetapi</rp.project>
-        <!--If yo want to run the test cases  tagged as @smoke by default uncomment the below -->
-        <!--<metaFilter1>+smoke</metaFilter1>-->
+        <rp.project>TestAuthon</rp.project>
         <metaFilter1></metaFilter1>
-        <runner>RunWebStories.java</runner>
-
+        <runner>RunStories.java</runner>
+        <jbehave.execution.threads>5</jbehave.execution.threads>
     </properties>
 
     <repositories>
@@ -40,38 +34,8 @@
         </repository>
     </repositories>
 
-    <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
-        <dependency>
-            <groupId>com.epam.reportportal</groupId>
-            <artifactId>logger-java-logback</artifactId>
-            <version>4.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jbehave</groupId>
-            <artifactId>jbehave-core</artifactId>
-            <version>4.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jbehave</groupId>
-            <artifactId>jbehave-spring</artifactId>
-            <version>4.5.1</version>
-        </dependency>
-
-        <!--selenium dependency-->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>3.141.59</version>
-        </dependency>
 
         <!--Test Runner Dependency-->
         <dependency>
@@ -85,7 +49,7 @@
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
-            <version>4.0.0</version>
+            <version>4.1.0</version>
         </dependency>
 
         <dependency>
@@ -100,77 +64,12 @@
             <version>4.0.0</version>
         </dependency>
 
-        <!--Logging Dependency-->
-       <!-- <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.11.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.11.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-iostreams</artifactId>
-            <version>2.11.2</version>
-        </dependency>-->
-
-        <!-- AspectJ -->
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jayway.awaitility</groupId>
-            <artifactId>awaitility</artifactId>
-            <version>1.7.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path-assert</artifactId>
-            <version>2.2.0</version>
-        </dependency>
+        <!--Assertion Dependency-->
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>3.5.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-        </dependency>
-
-        <!-- DB Utils-->
-        <dependency>
-            <groupId>commons-dbutils</groupId>
-            <artifactId>commons-dbutils</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-dbcp2</artifactId>
-            <version>2.0</version>
-        </dependency>
-
-
 
         <!--Report Portal jars-->
         <dependency>
@@ -178,6 +77,7 @@
             <artifactId>agent-java-jbehave</artifactId>
             <version>4.2.0</version>
         </dependency>
+
         <dependency>
             <groupId>com.epam.reportportal</groupId>
             <artifactId>logger-java-log4j</artifactId>
@@ -185,33 +85,49 @@
         </dependency>
 
         <dependency>
-            <groupId>io.appium</groupId>
-            <artifactId>java-client</artifactId>
-            <version>6.1.0</version>
+            <groupId>com.epam.reportportal</groupId>
+            <artifactId>logger-java-logback</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <!--selenium Appium dependency-->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.141.59</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>7.2.0</version>
+        </dependency>
+
+        <!--Spring Dependency-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>5.1.4.RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
             <version>5.1.4.RELEASE</version>
         </dependency>
 
+        <!--Jbehave Dependency-->
+        <dependency>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-spring</artifactId>
+            <version>${jbehave.core.version}</version>
+        </dependency>
 
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>3.2.3.RELEASE</version>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-core</artifactId>
+            <version>${jbehave.core.version}</version>
         </dependency>
 
     </dependencies>
-
-
 
 
     <build>
@@ -269,7 +185,6 @@
                             <ignoreFailureInView>false</ignoreFailureInView>
                         </configuration>
                         <goals>
-                            <goal>unpack-view-resources</goal>
                             <goal>run-stories-as-embeddables</goal>
                         </goals>
                     </execution>
