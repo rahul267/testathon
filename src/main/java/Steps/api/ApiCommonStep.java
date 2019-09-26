@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.Map;
 
 import static io.restassured.RestAssured.*;
@@ -69,11 +70,13 @@ public class ApiCommonStep {
         System.setProperty("jsse.enableSNIExtension", "false");
         RestAssured.useRelaxedHTTPSValidation();
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        response = given().config(RestAssuredConfig.config().encoderConfig(encoderConfig().encodeContentTypeAs("multipart/form-data", ContentType.HTML))).
+        File uploadFile = new File("upfile");
+        response = given().log().all().
+                //config(RestAssuredConfig.config().encoderConfig(encoderConfig().encodeContentTypeAs("multipart/form-data", ContentType.HTML))).
                 spec(req).
+                        multiPart(uploadFile).
                 contentType("multipart/form-data").
                 accept("text/html").
-                formParam("upfile",upfile).
                 formParam("note",note).
                 post("service");
         return response;
