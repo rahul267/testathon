@@ -26,16 +26,18 @@ public class GooglePage {
 
     @Autowired
     UIUtilities utilities ;
+
+
     @FindBy(xpath = "//input[contains(@class,'gLFyf gsfi')]")
     WebElement searchField;
 
     @FindBy(xpath="//div[@class='FPdoLc VlcLAe']//input[contains(@value,'Google Search')]")
     WebElement googleSearchButton;
-
+    String searchButton="//div[@class='FPdoLc VlcLAe']//input[contains(@value,'Google Search')]";
     @FindBy(xpath="//div[contains(@id,'rso')]//cite[contains(text(),'https://www.facebook.com › ... › Community › STeP-IN Forum')]")
     WebElement stepinLink;
     String stepin_Link="//div[contains(@id,'rso')]//cite[contains(text(),'https://www.facebook.com › ... › Community › STeP-IN Forum')]";
-    Actions action= new Actions(webDriverWrapper.getWebDriver());
+   // Actions action= new Actions(webDriverWrapper.getWebDriver());
 @FindBy(xpath = "//a[contains(@id,'expanding_cta_close_button')]")
 WebElement notNow;
 
@@ -53,42 +55,44 @@ String postsLink="//span[contains(text(),'Posts')]";
     public void Search(String testData){
         utilities.waitForPageLoad(webDriverWrapper.getWebDriver(),30);
         searchField.sendKeys(testData);
+        webDriverWrapper.waitForVisibilityOf(By.xpath(searchButton));
         googleSearchButton.click();
         utilities.waitForPageLoad(webDriverWrapper.getWebDriver(),30);
     }
     public void verifyUserOnGooglePage(){
 
     }
-
+    public void navigateToCommunity(){
+        webDriverWrapper.getWebDriver().navigate().to("https://www.facebook.com/pg/STeP-IN-Forum-2063693617253588/community/");
+    }
     public void clickOnLink(){
-        List<WebElement> li= webDriverWrapper.getWebDriver().findElements(By.xpath("//div[@class='g']//div[@class='r']//cite"));
+        navigateToCommunity();
+        utilities.waitForPageLoad(webDriverWrapper.getWebDriver(), 40);
+       /* List<WebElement> li= webDriverWrapper.getWebDriver().findElements(By.xpath("//div[@class='g']//div[@class='r']//cite"));
 
         boolean flag=true;
         viewPage();
         utilities.waitForPageLoad(webDriverWrapper.getWebDriver(), 40);
-        popUp();
+        popUp();*/
     }
 public void popUp(){
-    ((JavascriptExecutor) webDriverWrapper.getWebDriver()).executeScript("window.scrollTo(0, document.body.scrollHeight);");
-    //  Thread.sleep(2000);
-    webDriverWrapper.waitForVisibilityOf(By.xpath("//div[@class='uiScaledImageContainer _62ui']"));
-    webDriverWrapper.waitForVisibilityOf(By.xpath("//a[contains(@id,'expanding_cta_close_button')]"));
-    notNow.click();
+
+        try{
+            ((JavascriptExecutor) webDriverWrapper.getWebDriver()).executeScript("window.scrollTo(0, document.body.scrollHeight);");
+            //  Thread.sleep(2000);
+            webDriverWrapper.waitForVisibilityOf(By.xpath("//div[@class='uiScaledImageContainer _62ui']"));
+            webDriverWrapper.waitForVisibilityOf(By.xpath("//a[contains(@id,'expanding_cta_close_button')]"));
+            notNow.click();
+        }catch(Exception e){
+
+        }
+
 }
     public void clickOnPostsTab(){
         ((JavascriptExecutor) webDriverWrapper.getWebDriver()).executeScript("arguments[0].scrollIntoView(true);",posts);
+        popUp();
         webDriverWrapper.waitForVisibilityOf(By.xpath(postsLink));
         posts.click();
-    }
-    public void viewPage(){
-        String source=webDriverWrapper.getWebDriver().getPageSource();
-        if(source.contains("25000")){
-            webDriverWrapper.waitForVisibilityOf(By.xpath(stepin_Link));
-            stepinLink.click();
-        }
-        else
-            action.moveToElement(next).click().build().perform();
-
     }
 
 }
