@@ -83,55 +83,12 @@ public void popUp(){
     public void viewPage(){
         String source=webDriverWrapper.getWebDriver().getPageSource();
         if(source.contains("25000")){
-
+            webDriverWrapper.waitForVisibilityOf(By.xpath(stepin_Link));
+            stepinLink.click();
         }
         else
             action.moveToElement(next).click().build().perform();
 
     }
 
-    //comment
-    /*Actions action= new Actions(webDriverWrapper.getWebDriver());
-       *//* action.moveToElement(stepinLink).build().perform();
-        webDriverWrapper.waitForVisibilityOf(By.xpath(stepin_Link));
-        stepinLink.click();*//*
-       while(flag){
-        for(int i=1;i<=li.size();i++){
-            ((JavascriptExecutor) webDriverWrapper.getWebDriver()).executeScript("arguments[0].scrollIntoView(true);", li.get(i));
-            // action.moveToElement(li.get(i)).perform();
-            if(li.get(i).getText().contains("https://www.facebook.com › ... › Community › STeP-IN Forum › Community")){
-                webDriverWrapper.waitForVisibilityOf(By.xpath("//div[@class='g']//div[@class='r']//cite["+i+"]"));
-                li.get(i).click();
-                flag=false;
-                break;
-            }
-            else
-            {
-                flag=true;
-                action.moveToElement(next).click().build().perform();
-            }
-
-        }
-    }
-
-
-      *//*  Actions action= new Actions(webDriverWrapper.getWebDriver());
-        action.moveToElement(stepinLink).build().perform();*//*
-      *//*  boolean flag=true;
-while(flag){
-
-    List<WebElement> li= webDriverWrapper.getWebDriver().findElements(By.xpath(stepin_Link));
-    if(li.size()>0){
-        flag=false;
-        webDriverWrapper.waitForVisibilityOf(By.xpath(stepin_Link));
-        stepinLink.click();
-
-    }else{
-
-    }
-
-
-}*//*
-        *//*webDriverWrapper.waitForVisibilityOf(By.xpath(stepin_Link));
-        stepinLink.click();*/
 }
