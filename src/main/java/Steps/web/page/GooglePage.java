@@ -3,10 +3,7 @@ package Steps.web.page;
 import Utilities.UIUtilities;
 import com.google.errorprone.annotations.FormatMethod;
 import mobileUtlity.WebDriverWrapper;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -30,7 +27,7 @@ public class GooglePage {
 
     @FindBy(xpath = "//input[contains(@class,'gLFyf gsfi')]")
     WebElement searchField;
-
+    //div[@class='VlcLAe']//input[@value='Google Search']
     @FindBy(xpath="//div[@class='FPdoLc VlcLAe']//input[contains(@value,'Google Search')]")
     WebElement googleSearchButton;
     String searchButton="//div[@class='FPdoLc VlcLAe']//input[contains(@value,'Google Search')]";
@@ -57,6 +54,8 @@ WebElement login;
 @FindBy(xpath = "//button[@id='loginbutton']")
         WebElement loginButton;
 String postsLink="//span[contains(text(),'Posts')]";
+@FindBy(xpath = "//div[@class='VlcLAe']//input[@value='Google Search']")
+WebElement search;
     public GooglePage(@Autowired WebDriverWrapper webDriverWrapper){
         PageFactory.initElements(webDriverWrapper.getWebDriver(),this);
     }
@@ -64,24 +63,37 @@ String postsLink="//span[contains(text(),'Posts')]";
     public void Search(String testData){
         utilities.waitForPageLoad(webDriverWrapper.getWebDriver(),30);
         searchField.sendKeys(testData);
-        try{
-        webDriverWrapper.getWebDriver().wait(20);}
+        try {
+            Thread.sleep(5000);
+        }
         catch(Exception e){
 
         }
-        webDriverWrapper.waitForVisibilityOf(By.xpath(searchButton));
-        googleSearchButton.click();
+       // webDriverWrapper.getWebDriver().wait(20);}
+        Actions act=new Actions(webDriverWrapper.getWebDriver());
+           // search.sendKeys(Keys.TAB);
+            try{
+                search.sendKeys(Keys.ENTER);
+            }catch(Exception e){
+                webDriverWrapper.waitForVisibilityOf(By.xpath(searchButton));
+                googleSearchButton.click();
+            }
+
+
+
         utilities.waitForPageLoad(webDriverWrapper.getWebDriver(),30);
     }
 
     public void navigateToCommunity(){
         webDriverWrapper.getWebDriver().navigate().to("https://www.facebook.com/pg/STeP-IN-Forum-2063693617253588/community/");
     }
-    public void clickOnLink(){
+    public void clickOnLink() {
         navigateToCommunity();
         utilities.waitForPageLoad(webDriverWrapper.getWebDriver(), 40);
         login();
-      }
+        utilities.waitForPageLoad(webDriverWrapper.getWebDriver(), 40);
+       // webDriverWrapper.getWebDriver().switchTo().alert().accept();
+    }
 
       public void login(){
         login.click();
@@ -124,5 +136,9 @@ public void popUp(){
 
 
         }
+    }
+
+    public void download(){
+        //utilities.dowloadPhoto();
     }
 }
