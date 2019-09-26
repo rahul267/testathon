@@ -44,6 +44,10 @@ public class MobileDriverWrapper {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    public AndroidDriver getAndroidDriver(){
+        return androidDriver;
+    }
+
     public WebElement waitForVisibilityOf(By locator , long waitTime) {
         WebDriverWait wait = new WebDriverWait(androidDriver, waitTime);
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
@@ -103,4 +107,3 @@ public class MobileDriverWrapper {
     }
 
 }
-
