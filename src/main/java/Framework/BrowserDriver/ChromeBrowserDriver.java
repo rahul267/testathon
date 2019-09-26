@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ChromeBrowserDriver implements BrowserDriver {
@@ -22,7 +24,13 @@ public class ChromeBrowserDriver implements BrowserDriver {
     public WebDriver createDriver(String os) {
         WebDriver driver = null;
         System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_FILEPATH);
+        Map<String, Object> prefs = new HashMap<String, Object>();
+
+        //add key and value to map as follow to switch off browser notification
+        //Pass the argument 1 to allow and 2 to block
+        prefs.put("profile.default_content_setting_values.notifications", 2);
         ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setExperimentalOption("prefs", prefs);
         chromeOptions.setAcceptInsecureCerts(true);
         driver = new ChromeDriver(chromeOptions);
         return driver;

@@ -13,5 +13,3 @@ Given I Navigate and download to post which has more than 4 images
 Given I navigate to photo
 Given I click on See All Link
 Then I extract Album and Photos name and count and create a json file
-
-
