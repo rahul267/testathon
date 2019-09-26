@@ -138,9 +138,6 @@ public class UIUtilities {
 
     public void downloadPhoto(WebDriver driver, String URL, int waitTime) throws IOException, InterruptedException {
         waitForPageLoad(driver,100);
-
-        Thread.sleep(10000);
-
         List<WebElement> allElements=driver.findElements(By.xpath("//*[@class='_5dec _xcx']"));;
         int counter = 1;
         for(WebElement photo :allElements) {
