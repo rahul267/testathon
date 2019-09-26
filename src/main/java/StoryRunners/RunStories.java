@@ -50,7 +50,7 @@ public class RunStories extends JUnitStories {
 
     @Override
     protected List<String> storyPaths() {
-        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/TestStory/*.story", "");
+        return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/TestAutothon/*.story", "");
 
     }
 }

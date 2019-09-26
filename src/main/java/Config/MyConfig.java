@@ -14,7 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @Configuration
-@ComponentScan({"Steps", "mobileUtlity", "Config"})
+@ComponentScan({"Steps", "mobileUtlity", "Config","Utilities"})
 @PropertySource({"Config/${env:dev}/env.properties"})
 public class MyConfig {
     private static final Logger log = LoggerFactory.getLogger(MyConfig.class);
