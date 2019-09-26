@@ -1,5 +1,7 @@
 package Steps.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import io.restassured.RestAssured;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.http.ContentType;
@@ -15,9 +17,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import pojo.AlbumContents;
+import pojo.Data;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.*;
@@ -92,4 +99,35 @@ public class ApiCommonStep {
                 post("service");
         return response;
     }
+
+
+    @Given("I make a json request with $albumPhotos ")
+    public void createJsonFromPojo(@Named("album") HashMap<String,Integer> albumPhotos) {
+        log.info("calling get events proposed Talks details");
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        Data myJsonFile = new Data() ;
+        myJsonFile.setTeam("EPAM") ;
+        Map<String, Integer> photo = new HashMap();
+        for(String key : albumPhotos.keySet())
+        { photo.put(key, albumPhotos.get(key)); }
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        File uploadFile = null  ;
+        URL resource = classLoader.getResource("data.json");
+        if (resource == null) {
+            throw new IllegalArgumentException("file is not found!");
+        } else {
+            uploadFile = new File(resource.getFile());
+        }
+
+        try {
+            mapper.writeValue(new File(resource.getFile()),myJsonFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 }
