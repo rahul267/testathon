@@ -34,8 +34,8 @@ public class GooglePage {
 
     @FindBy(xpath="//div[contains(@id,'rso')]//cite[contains(text(),'https://www.facebook.com › ... › Community › STeP-IN Forum')]")
     WebElement stepinLink;
-String stepin_Link="//div[contains(@id,'rso')]//cite[contains(text(),'https://www.facebook.com › ... › Community › STeP-IN Forum')]";
-
+    String stepin_Link="//div[contains(@id,'rso')]//cite[contains(text(),'https://www.facebook.com › ... › Community › STeP-IN Forum')]";
+    Actions action= new Actions(webDriverWrapper.getWebDriver());
 @FindBy(xpath = "//a[contains(@id,'expanding_cta_close_button')]")
 WebElement notNow;
 
@@ -62,30 +62,62 @@ String postsLink="//span[contains(text(),'Posts')]";
 
     public void clickOnLink(){
         List<WebElement> li= webDriverWrapper.getWebDriver().findElements(By.xpath("//div[@class='g']//div[@class='r']//cite"));
+
         boolean flag=true;
-        while(flag){
-            for(int i=1;i<=li.size();i++){
-                Actions action= new Actions(webDriverWrapper.getWebDriver());
-                action.moveToElement(li.get(i)).perform();
-                if(li.get(i).getText().contains("https://www.facebook.com › ... › Community › STeP-IN Forum › Community")){
-                   // webDriverWrapper.waitForVisibilityOf(By.xpath(stepin_Link));
-                    li.get(i).click();
-                    flag=false;
-                    break;
-                }
-                else
-                {
-                    flag=true;
-                    action.moveToElement(next).click().build().perform();
-                }
+        viewPage();
+        utilities.waitForPageLoad(webDriverWrapper.getWebDriver(), 40);
+        popUp();
+    }
+public void popUp(){
+    ((JavascriptExecutor) webDriverWrapper.getWebDriver()).executeScript("window.scrollTo(0, document.body.scrollHeight);");
+    //  Thread.sleep(2000);
+    webDriverWrapper.waitForVisibilityOf(By.xpath("//div[@class='uiScaledImageContainer _62ui']"));
+    webDriverWrapper.waitForVisibilityOf(By.xpath("//a[contains(@id,'expanding_cta_close_button')]"));
+    notNow.click();
+}
+    public void clickOnPostsTab(){
+        ((JavascriptExecutor) webDriverWrapper.getWebDriver()).executeScript("arguments[0].scrollIntoView(true);",posts);
+        webDriverWrapper.waitForVisibilityOf(By.xpath(postsLink));
+        posts.click();
+    }
+    public void viewPage(){
+        String source=webDriverWrapper.getWebDriver().getPageSource();
+        if(source.contains("25000")){
 
-            }
         }
+        else
+            action.moveToElement(next).click().build().perform();
+
+    }
+
+    //comment
+    /*Actions action= new Actions(webDriverWrapper.getWebDriver());
+       *//* action.moveToElement(stepinLink).build().perform();
+        webDriverWrapper.waitForVisibilityOf(By.xpath(stepin_Link));
+        stepinLink.click();*//*
+       while(flag){
+        for(int i=1;i<=li.size();i++){
+            ((JavascriptExecutor) webDriverWrapper.getWebDriver()).executeScript("arguments[0].scrollIntoView(true);", li.get(i));
+            // action.moveToElement(li.get(i)).perform();
+            if(li.get(i).getText().contains("https://www.facebook.com › ... › Community › STeP-IN Forum › Community")){
+                webDriverWrapper.waitForVisibilityOf(By.xpath("//div[@class='g']//div[@class='r']//cite["+i+"]"));
+                li.get(i).click();
+                flag=false;
+                break;
+            }
+            else
+            {
+                flag=true;
+                action.moveToElement(next).click().build().perform();
+            }
+
+        }
+    }
 
 
-      /*  Actions action= new Actions(webDriverWrapper.getWebDriver());
-        action.moveToElement(stepinLink).build().perform();*/
-      /*  boolean flag=true;
+      *//*  Actions action= new Actions(webDriverWrapper.getWebDriver());
+        action.moveToElement(stepinLink).build().perform();*//*
+      *//*  boolean flag=true;
 while(flag){
 
     List<WebElement> li= webDriverWrapper.getWebDriver().findElements(By.xpath(stepin_Link));
@@ -99,20 +131,7 @@ while(flag){
     }
 
 
-}*/
-        /*webDriverWrapper.waitForVisibilityOf(By.xpath(stepin_Link));
+}*//*
+        *//*webDriverWrapper.waitForVisibilityOf(By.xpath(stepin_Link));
         stepinLink.click();*/
-        utilities.waitForPageLoad(webDriverWrapper.getWebDriver(), 40);
-        ((JavascriptExecutor) webDriverWrapper.getWebDriver()).executeScript("window.scrollTo(0, document.body.scrollHeight);");
-      //  Thread.sleep(2000);
-        webDriverWrapper.waitForVisibilityOf(By.xpath("//div[@class='uiScaledImageContainer _62ui']"));
-        webDriverWrapper.waitForVisibilityOf(By.xpath("//a[contains(@id,'expanding_cta_close_button')]"));
-        notNow.click();
-    }
-
-    public void clickOnPostsTab(){
-        ((JavascriptExecutor) webDriverWrapper.getWebDriver()).executeScript("arguments[0].scrollIntoView(true);",posts);
-        webDriverWrapper.waitForVisibilityOf(By.xpath(postsLink));
-        posts.click();
-    }
 }
