@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Map;
 
 import static io.restassured.RestAssured.*;
@@ -70,7 +71,17 @@ public class ApiCommonStep {
         System.setProperty("jsse.enableSNIExtension", "false");
         RestAssured.useRelaxedHTTPSValidation();
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        File uploadFile = new File("upfile");
+
+        ClassLoader classLoader = getClass().getClassLoader();
+
+        File uploadFile = null  ;
+        URL resource = classLoader.getResource("data.json");
+       if (resource == null) {
+           throw new IllegalArgumentException("file is not found!");
+        } else {
+             uploadFile = new File(resource.getFile());
+        }
+       // File uploadFile = new File("./resources/data.json");
         response = given().log().all().
                 //config(RestAssuredConfig.config().encoderConfig(encoderConfig().encodeContentTypeAs("multipart/form-data", ContentType.HTML))).
                 spec(req).
