@@ -47,6 +47,15 @@ WebElement posts;
 @FindBy(xpath = "//span[text()='Next']")
 WebElement next;
 
+@FindBy(xpath="//a[contains(text(),'Log In')]")
+WebElement login;
+
+@FindBy(xpath = "//input[@id='email']")
+        WebElement userName;
+@FindBy(xpath="//input[@id='pass']")
+        WebElement password;
+@FindBy(xpath = "//button[@id='loginbutton']")
+        WebElement loginButton;
 String postsLink="//span[contains(text(),'Posts')]";
     public GooglePage(@Autowired WebDriverWrapper webDriverWrapper){
         PageFactory.initElements(webDriverWrapper.getWebDriver(),this);
@@ -55,26 +64,34 @@ String postsLink="//span[contains(text(),'Posts')]";
     public void Search(String testData){
         utilities.waitForPageLoad(webDriverWrapper.getWebDriver(),30);
         searchField.sendKeys(testData);
+        try{
+        webDriverWrapper.getWebDriver().wait(20);}
+        catch(Exception e){
+
+        }
         webDriverWrapper.waitForVisibilityOf(By.xpath(searchButton));
         googleSearchButton.click();
         utilities.waitForPageLoad(webDriverWrapper.getWebDriver(),30);
     }
-    public void verifyUserOnGooglePage(){
 
-    }
     public void navigateToCommunity(){
         webDriverWrapper.getWebDriver().navigate().to("https://www.facebook.com/pg/STeP-IN-Forum-2063693617253588/community/");
     }
     public void clickOnLink(){
         navigateToCommunity();
         utilities.waitForPageLoad(webDriverWrapper.getWebDriver(), 40);
-       /* List<WebElement> li= webDriverWrapper.getWebDriver().findElements(By.xpath("//div[@class='g']//div[@class='r']//cite"));
+        login();
+      }
 
-        boolean flag=true;
-        viewPage();
-        utilities.waitForPageLoad(webDriverWrapper.getWebDriver(), 40);
-        popUp();*/
-    }
+      public void login(){
+        login.click();
+        utilities.waitForPageLoad(webDriverWrapper.getWebDriver(),30);
+        userName.sendKeys("selenium.onlinetutorials@gmail.com");
+        password.sendKeys("fbpwd#123");
+        loginButton.click();
+        utilities.waitForPageLoad(webDriverWrapper.getWebDriver(),30);
+
+      }
 public void popUp(){
 
         try{
@@ -90,9 +107,22 @@ public void popUp(){
 }
     public void clickOnPostsTab(){
         ((JavascriptExecutor) webDriverWrapper.getWebDriver()).executeScript("arguments[0].scrollIntoView(true);",posts);
-        popUp();
+       // popUp();
         webDriverWrapper.waitForVisibilityOf(By.xpath(postsLink));
         posts.click();
     }
+    @FindBy(xpath = "(//div[contains(@id,'u_fetchstream_1_2t')]//div[@class='mtm'])]")
+    WebElement topPost;
+    String top_Post="(//div[contains(@id,'u_fetchstream_1_2t')]//div[@class='mtm'])[1]/div/a/following::div/div/div[contains(text(),'+')]";
+    public void selectPost(){
+        List<WebElement> we= webDriverWrapper.getWebDriver().findElements(By.xpath(top_Post));
+        for(int i=1;i<=we.size();i++){
+            int count=webDriverWrapper.getWebDriver().findElements(By.xpath("(//div[contains(@id,'u_fetchstream_1_2t')]//div[@class='mtm'])["+i+"]/div/a/following::div/div/div[contains(text(),'+')]")).size();
+            if(count>0){
+                WebElement element=webDriverWrapper.getWebDriver().findElement(By.xpath("(//div[contains(@id,'u_fetchstream_1_2t')]//div[@class='mtm'])["+i+"]/div/a/following::div/div/div[contains(text(),'+')]"));
+            }
 
+
+        }
+    }
 }
