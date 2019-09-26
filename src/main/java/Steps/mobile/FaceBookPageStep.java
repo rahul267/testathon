@@ -23,4 +23,9 @@ public class FaceBookPageStep {
         Assertions.assertThat(facebookPage.isPageLoaded()).isTrue();
     }
 
+    @Given ("I Navigate to Post")
+    public void navigateToFaceBook(){
+        facebookPage.clickOnPostLink();
+    }
+
 }

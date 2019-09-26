@@ -9,4 +9,5 @@ Then Google Page is Loaded
 When I Search for keyword step-in forum facebook
 Then I expect search results has result which contains text 25000 test professionals
 Given I click on Result which contains text 25000 test professionals
+Given I Navigate to Post
 
