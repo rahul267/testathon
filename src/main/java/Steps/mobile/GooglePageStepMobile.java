@@ -1,6 +1,6 @@
 package Steps.mobile;
 
-import Steps.mobile.page.GooglePage;
+import Steps.mobile.page.GooglePageMobile;
 import org.assertj.core.api.Assertions;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Lazy
-public class GooglePageStep {
+public class GooglePageStepMobile {
 
     @Autowired
-    private GooglePage googlePage;
+    private GooglePageMobile googlePage;
 
     @Then("Google Page is Loaded")
     public void googlePageLoaded(){

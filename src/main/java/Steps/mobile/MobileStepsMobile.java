@@ -16,7 +16,7 @@ import java.net.URL;
 
 @Component
 @Lazy
-public class MobileSteps {
+public class MobileStepsMobile {
 
     @Autowired
     private MobileDriverWrapper mobileDriver;

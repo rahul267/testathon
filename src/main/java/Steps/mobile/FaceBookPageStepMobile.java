@@ -1,12 +1,9 @@
 package Steps.mobile;
 
-import Steps.mobile.page.FacebookPage;
-import Steps.mobile.page.GooglePage;
+import Steps.mobile.page.FacebookPageMobile;
 import org.assertj.core.api.Assertions;
 import org.jbehave.core.annotations.Given;
-import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
-import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -15,10 +12,10 @@ import java.io.IOException;
 
 @Component
 @Lazy
-public class FaceBookPageStep {
+public class FaceBookPageStepMobile {
 
     @Autowired
-    private FacebookPage facebookPage;
+    private FacebookPageMobile facebookPage;
 
     @Then("Facebook Page is Loaded")
     public void faceBookPageLoaded(){
@@ -45,7 +42,7 @@ public class FaceBookPageStep {
         facebookPage.clickSeeAllLink();
     }
 
-    @Given("I extract Album and Photos name and count and create a json file")
+    @Then("I extract Album and Photos name and count and create a json file")
     public void savePhotoLink(){
         facebookPage.saveAllPhotoAlbumCount();
     }

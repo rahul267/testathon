@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Lazy
-public class GooglePage {
+public class GooglePageMobile {
     private String searchElementXpath="//*[@id=\"tsf\"]//input[@type ='search']";
     private String searchButtonXpath="//*[@id=\"tsf\"]/div[2]/div[1]/div[1]/button[2]";
     private String searchResultTextContainsPath = "//*[contains(text(),'STeP-IN Forum')]";

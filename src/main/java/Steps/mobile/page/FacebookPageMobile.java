@@ -15,11 +15,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Lazy
-public class FacebookPage {
+public class FacebookPageMobile {
 
     @Autowired
     private MobileDriverWrapper mobileDriverWrapper;
@@ -73,10 +75,10 @@ public class FacebookPage {
     }
 
     public void saveAllPhotoAlbumCount() {
-        List<String> albumName = new ArrayList<>();
+        Map<String,String> albumName = new HashMap<>();
         List<WebElement> albumNameList = mobileDriverWrapper.getAndroidDriver().findElements( By.xpath("//div[@class='_52je _52jb _52jh']"));
         albumNameList.forEach(element ->{
-            albumName.add(element.getText());
+            albumName.put(element.getText(),element.findElement(By.className("mfss fcg")).getText());
         });
     }
 }
