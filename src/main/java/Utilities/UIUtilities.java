@@ -1,6 +1,7 @@
 package Utilities;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -11,8 +12,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -24,39 +28,47 @@ public class UIUtilities {
 
     private static final Logger log = LoggerFactory.getLogger(UIUtilities.class);
 
-public void waitForPageLoad(WebDriver driver,int waitTime){
-    WebDriverWait wait = new WebDriverWait(driver, waitTime);
-    wait.until(new ExpectedCondition<Boolean>() {
-        public Boolean apply(WebDriver driver) {
-            return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
-        }
-    });
-}
+    public void waitForPageLoad(WebDriver driver, int waitTime) {
+        WebDriverWait wait = new WebDriverWait(driver, waitTime);
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
+            }
+        });
+    }
 
-    public void waitForElement(WebDriver driver, String element, int waitTime){
+    public void waitForElement(WebDriver driver, String element, int waitTime) {
         WebDriverWait wait = new WebDriverWait(driver, waitTime);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(element)));
     }
 
-public void takeScreenShot(WebDriver driver){
+    public void takeScreenShot(WebDriver driver) {
 
-    log.info("Taking screen shot of the page");
+        log.info("Taking screen shot of the page");
 
-    File screenshotFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-    try {
+        File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        try {
 
-        FileUtils.copyFile(screenshotFile, new File("D:\\TestAthonGitHub\\testathon\\src\\main\\resources\\snapshot.jpg"));
+            FileUtils.copyFile(screenshotFile, new File("D:\\TestAthonGitHub\\testathon\\src\\main\\resources\\snapshot.jpg"));
+        } catch (IOException e) {
+            e.getMessage();
+        }
     }
-    catch(IOException e){
-        e.getMessage();
-    }
-}
-    public void scrollToElement(WebDriver driver, WebElement element){
+
+    public void scrollToElement(WebDriver driver, WebElement element) {
         /*((JavascriptExecutor) driver)
                 .executeScript("window.scrollTo(0, document.body.scrollHeight)");*/
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
 
     }
+
+    public void scollPage(WebDriver driver) {
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,1000)");
+    }
+
+
     public void scrollUp(WebDriver driver) {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         jse.executeScript("scroll(0, -250);");
@@ -116,5 +128,34 @@ public void takeScreenShot(WebDriver driver){
             e.printStackTrace();
         }
 
+    }
+
+  /*  pubic void waitForPageLoad(WebDriver driver, int timeout)
+    {
+        new WebDriverWait(driver, timeout).until(
+                webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+    }*/
+
+    public void downloadPhoto(WebDriver driver, String URL, int waitTime) throws IOException, InterruptedException {
+        waitForPageLoad(driver,100);
+
+        Thread.sleep(10000);
+
+        List<WebElement> allElements=driver.findElements(By.xpath("//*[@class='_5dec _xcx']"));;
+        int counter = 1;
+        for(WebElement photo :allElements) {
+/*            scrollToElement(driver,photo);*/
+            String logoSRC = photo.getAttribute("data-ploi");
+
+            URL imageURL = new URL(logoSRC);
+            BufferedImage saveImage = ImageIO.read(imageURL);
+            File imageFile = new File(counter+".jpg");
+            ImageIO.write(saveImage, "jpg", imageFile);
+            ++counter;
+
+            long size = imageFile.length();
+            System.out.println(size);
+            Assert.assertTrue("File is empty with 0 size ",size > 0);
+        }
     }
 }
