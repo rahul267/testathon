@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class GooglePage {
     private String searchElementXpath="//*[@id=\"tsf\"]//input[@type ='search']";
     private String searchButtonXpath="//*[@id=\"tsf\"]/div[2]/div[1]/div[1]/button[2]";
-    private String searchResultTextContainsPath = "(//*[contains(text(),'%s')]//ancestor::div)[8]";
+    private String searchResultTextContainsPath = "//*[contains(text(),'STeP-IN Forum')]";
     @Autowired
     private MobileDriverWrapper mobileDriverWrapper;
     public boolean isPageLoaded(){
