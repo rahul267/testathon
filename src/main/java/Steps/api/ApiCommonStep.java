@@ -1,5 +1,8 @@
 package Steps.api;
 
+import io.restassured.RestAssured;
+import io.restassured.config.RestAssuredConfig;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.assertj.core.api.Assertions;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 import static io.restassured.RestAssured.*;
+import static io.restassured.config.EncoderConfig.encoderConfig;
 
 @Component
 @Lazy
@@ -54,8 +58,24 @@ public class ApiCommonStep {
 
     @Then("validate the status code is $statusCode")
     public void validateStatusCode(@Named("statusCode") int statusCode) {
-        log.info("Status code of get All events is" + statusCode);
+        log.info("Status code of upload file Api is" + statusCode);
         Assertions.assertThat(response.getStatusCode()).isEqualTo(statusCode);
     }
 
+
+    @When("I make post request to  <service> with fields like <upfile>,<note> values")
+    public Response whenIMakePostRequestToServiceWithFieldsLikeUpfilenoteValues(@Named("service") String service, @Named("upfile") String upfile, @Named("note") String note) {
+        log.info("invoking file upload api");
+        System.setProperty("jsse.enableSNIExtension", "false");
+        RestAssured.useRelaxedHTTPSValidation();
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+        response = given().config(RestAssuredConfig.config().encoderConfig(encoderConfig().encodeContentTypeAs("multipart/form-data", ContentType.HTML))).
+                spec(req).
+                contentType("multipart/form-data").
+                accept("text/html").
+                formParam("upfile",upfile).
+                formParam("note",note).
+                post("service");
+        return response;
+    }
 }

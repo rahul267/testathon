@@ -1,0 +1,13 @@
+{
+  "team" : "Test_ABC",
+  "photos": [
+    {
+      "album_name" : "abc",
+      "photos" : 123
+    } ,
+    {
+      "album_name" : "efg",
+      "photos" : 123
+    }
+  ]
+}
